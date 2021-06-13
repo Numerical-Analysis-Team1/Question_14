@@ -39,6 +39,29 @@ def Newton_Raphson(pol, little_range, epsilon):
     return x2, counter
 
 
+def Solver(pol, big_range, epsilon, step, method):
+    function_Solver(pol, big_range, epsilon, step, method)
+    derivative_solver(pol, big_range, epsilon, step, method)
+
+
+def function_Solver(pol, big_range, epsilon, step, method):
+    f = lambdify(x, pol)
+    left_bound, right_bound = big_range
+    a, b = left_bound, left_bound + step
+
+    while b <= right_bound:
+
+        if f(a) * f(b) < 0:
+            solution = method(pol, (a, b), epsilon)
+            sol, iterations = solution
+            if solution is not None:
+                if abs(sol) < epsilon:
+                    sol = 0
+                print("x = " + str(sol) + ", number of iteration: " + str(iterations))
+        a += step
+        b += step
+
+
 def derivative_solver(pol, big_range, epsilon, step, method):
     f = lambdify(x, pol)
     df = lambdify(x, sp.diff(pol, x))
@@ -67,7 +90,14 @@ def derivative_solver(pol, big_range, epsilon, step, method):
 
 
 x = sp.symbols('x')
-user_func = x**4 + x**3 + -3*x**2
-user_range = (-10, 10)
-user_epsilon = 0.0001
-user_step = 0.1
+f = x*math.e**(-x**2 + 5*x)*(2*x**2 - 3*x - 5)
+rng = (0, 3)
+epsilon = 0.0001
+step = 0.1
+
+print("f(x) = " + "x*math.e**(-x**2 + 5*x)*(2*x**2 - 3*x - 5)")
+print("Roots:")
+print("Bisection Method:")
+Solver(f, rng, epsilon, step, Bisection_Method)
+print("Newton Raphson Method:")
+Solver(f, rng, epsilon, step, Newton_Raphson)
