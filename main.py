@@ -8,12 +8,14 @@ def Integration_Simpson_Method(f, n, rng):
     a, b = rng[0], rng[1]
     h = (b - a) / n
     s = f(a) + f(b)
-    for i in range(1, n):
-        if i % 2:
-            s += 4*f(i*h)
+    X = a
+    for i in range(0, n-1):
+        X += h
+        if i % 2 == 0:
+            s += 4*f(X)
         else:
-            s += 2*f(i*h)
-    print("Integration Value = " + str(float((h/3) * s)))
+            s += 2*f(X)
+    print("Integration Value = " + str((h/3) * s))
 
 
 def Bisection_Method(f, little_range, epsilon):
@@ -121,7 +123,9 @@ print("Bisection Method:")
 roots_Solver(f, root_rng, epsilon, step, Bisection_Method)
 print("Newton Raphson Method:")
 roots_Solver(f, root_rng, epsilon, step, Newton_Raphson)
-print("Integration: [0.5,1]")
-Integration_Simpson_Method(f, n, integration_rng)
+print("\nIntegration: [0.5,1]")
+print("Simpson Method:")
+Integration_Simpson_Method(f, 10000, integration_rng)
+
 
 
