@@ -118,7 +118,7 @@ epsilon = 0.0001
 step = 0.1
 n = 10
 
-print("f(x) = " + "x*math.e**(-x**2 + 5*x)*(2*x**2 - 3*x - 5)")
+print("f(x) = " + "x*e**(-x**2 + 5*x)*(2*x**2 - 3*x - 5)")
 print("Roots: [0,3]")
 print("Bisection Method:")
 roots_Solver(f, root_rng, epsilon, step, Bisection_Method)
