@@ -3,6 +3,35 @@ import sympy as sp
 from sympy.utilities.lambdify import lambdify
 
 
+def trapezoidal_method(f, n, rng):
+    a, b = rng
+    h = (b - a) / n
+    x = a
+    s = 0
+
+    for i in range(n):
+        s += (f(x) + f(x + h)) / 2
+        x += h
+
+    return s * h
+
+
+def Integration_Romberg_method(f, n, rng):
+    f = lambdify(x, f)
+    r = [[0 for j in range(i)] for i in range(1, n + 1)]
+
+    for i in range(0, n):
+        r[i][0] = trapezoidal_method(f, i + 1, rng)
+
+    for i in range(1, n):
+        for j in range(1, i + 1):
+            r[i][j] = r[i][j - 1] + 1/(4 ** j - 1) * (r[i][j - 1] - r[i - 1][j - 1])
+
+    for row in r:
+        print(row)
+    print("Integration Value = " + str(r[n - 1][n - 1]))
+
+
 def Integration_Simpson_Method(f, n, rng):
     f = lambdify(x, f)
     a, b = rng[0], rng[1]
@@ -127,6 +156,8 @@ roots_Solver(f, root_rng, epsilon, step, Newton_Raphson)
 print("\nIntegration: [0.5,1]")
 print("Simpson Method:")
 Integration_Simpson_Method(f, 10, integration_rng)
+print("Romberg method:")
+Integration_Romberg_method(f, n, integration_rng)
 
 
 
