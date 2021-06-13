@@ -16,10 +16,9 @@ def Bisection_Method(f, little_range, epsilon):
             a = c
         else:
             b = c
+    counter += 1
+    print(c)
 
-        counter += 1
-
-    c = (a + b) / 2
     if counter <= k:
         return c, counter
 
@@ -29,22 +28,26 @@ def Newton_Raphson(pol, little_range, epsilon):
     df = lambdify(x, sp.diff(pol, x))
     x1 = sum(little_range) / 2
     x2 = x1 - f(x1) / df(x1)
+
+    print(x2)
     counter = 1
 
     while abs(x2 - x1) > epsilon:
         x1 = x2
         x2 = (x1 - f(x1) / df(x1))
+
         counter += 1
+        print(x2)
 
     return x2, counter
 
 
-def Solver(pol, big_range, epsilon, step, method):
-    function_Solver(pol, big_range, epsilon, step, method)
-    derivative_solver(pol, big_range, epsilon, step, method)
+def roots_Solver(pol, big_range, epsilon, step, method):
+    roots_Function_Solver(pol, big_range, epsilon, step, method)
+    roots_Derivative_solver(pol, big_range, epsilon, step, method)
 
 
-def function_Solver(pol, big_range, epsilon, step, method):
+def roots_Function_Solver(pol, big_range, epsilon, step, method):
     f = lambdify(x, pol)
     left_bound, right_bound = big_range
     a, b = left_bound, left_bound + step
@@ -62,7 +65,7 @@ def function_Solver(pol, big_range, epsilon, step, method):
         b += step
 
 
-def derivative_solver(pol, big_range, epsilon, step, method):
+def roots_Derivative_solver(pol, big_range, epsilon, step, method):
     f = lambdify(x, pol)
     df = lambdify(x, sp.diff(pol, x))
     left_bound, right_bound = big_range
@@ -85,6 +88,8 @@ def derivative_solver(pol, big_range, epsilon, step, method):
                     sol = 0
                 print("x = " + str(sol) + ", number of iterations : " + str(iterations))
                 solution = None
+            else:
+                print("Not Converge")
         a += step
         b += step
 
@@ -96,8 +101,10 @@ epsilon = 0.0001
 step = 0.1
 
 print("f(x) = " + "x*math.e**(-x**2 + 5*x)*(2*x**2 - 3*x - 5)")
-print("Roots:")
+print("Roots: [0,3]")
 print("Bisection Method:")
-Solver(f, rng, epsilon, step, Bisection_Method)
+roots_Solver(f, rng, epsilon, step, Bisection_Method)
 print("Newton Raphson Method:")
-Solver(f, rng, epsilon, step, Newton_Raphson)
+roots_Solver(f, rng, epsilon, step, Newton_Raphson)
+print("Integration: [0.5,1]")
+
