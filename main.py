@@ -15,6 +15,7 @@ def Integration_Simpson_Method(f, n, rng):
             s += 4*f(X)
         else:
             s += 2*f(X)
+        print(str((h/3) * s))
     print("Integration Value = " + str((h/3) * s))
 
 
@@ -125,7 +126,7 @@ print("Newton Raphson Method:")
 roots_Solver(f, root_rng, epsilon, step, Newton_Raphson)
 print("\nIntegration: [0.5,1]")
 print("Simpson Method:")
-Integration_Simpson_Method(f, 10000, integration_rng)
+Integration_Simpson_Method(f, 10, integration_rng)
 
 
 
