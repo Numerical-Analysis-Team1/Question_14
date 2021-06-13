@@ -1,6 +1,15 @@
+import datetime
 import math
 import sympy as sp
 from sympy.utilities.lambdify import lambdify
+
+
+def format1(number):
+    t = round(number, 3)
+    now = datetime.datetime.now()
+    s = str(t) + "00000" + str(now.day) + str(now.hour) + str(now.minute)
+    new = float(s)
+    return new
 
 
 def trapezoidal_method(f, n, rng):
@@ -13,7 +22,7 @@ def trapezoidal_method(f, n, rng):
         s += (f(x) + f(x + h)) / 2
         x += h
 
-    return s * h
+    return float(s * h)
 
 
 def Integration_Romberg_method(f, n, rng):
@@ -29,7 +38,7 @@ def Integration_Romberg_method(f, n, rng):
 
     for row in r:
         print(row)
-    print("Integration Value = " + str(r[n - 1][n - 1]))
+    print("Integration Value = " + str(format1(r[n - 1][n - 1])))
 
 
 def Integration_Simpson_Method(f, n, rng):
@@ -45,7 +54,7 @@ def Integration_Simpson_Method(f, n, rng):
         else:
             s += 2*f(X)
         print(str((h/3) * s))
-    print("Integration Value = " + str((h/3) * s))
+    print("Integration Value = " + str(format1((h/3) * s)))
 
 
 def Bisection_Method(f, little_range, epsilon):
@@ -105,7 +114,7 @@ def roots_Function_Solver(pol, big_range, epsilon, step, method):
             if solution is not None:
                 if abs(sol) < epsilon:
                     sol = 0
-                print("x = " + str(sol) + ", number of iteration: " + str(iterations))
+                print("x = " + str(format1(sol)) + ", number of iteration: " + str(iterations))
         a += step
         b += step
 
@@ -131,7 +140,7 @@ def roots_Derivative_solver(pol, big_range, epsilon, step, method):
             if solution is not None and abs(f(sol)) < epsilon:
                 if abs(sol) < epsilon:
                     sol = 0
-                print("x = " + str(sol) + ", number of iterations : " + str(iterations))
+                print("x = " + str(format1(sol)) + ", number of iterations : " + str(iterations))
                 solution = None
             else:
                 print("Not Converge")
